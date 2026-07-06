@@ -23,6 +23,17 @@ intelliflow:
       max-poll-records: ${LOG_AGGREGATOR_MAX_POLL_RECORDS:100}
       error-backoff-ms: ${LOG_AGGREGATOR_ERROR_BACKOFF_MS:1000}
       error-max-attempts: ${LOG_AGGREGATOR_ERROR_MAX_ATTEMPTS:3}
+      error-backoff-multiplier: ${LOG_AGGREGATOR_ERROR_BACKOFF_MULTIPLIER:2.0}
+      error-max-backoff-ms: ${LOG_AGGREGATOR_ERROR_MAX_BACKOFF_MS:10000}
+    dlq:
+      topic: ${LOG_AGGREGATOR_DLQ_TOPIC:dlq}
+      consumer:
+        enabled: ${LOG_AGGREGATOR_DLQ_CONSUMER_ENABLED:true}
+        group-id: ${LOG_AGGREGATOR_DLQ_KAFKA_GROUP_ID:log-aggregator-dlq}
+        error-backoff-ms: ${LOG_AGGREGATOR_DLQ_ERROR_BACKOFF_MS:1000}
+        error-max-attempts: ${LOG_AGGREGATOR_DLQ_ERROR_MAX_ATTEMPTS:3}
+      replay:
+        send-timeout-seconds: ${LOG_AGGREGATOR_DLQ_REPLAY_SEND_TIMEOUT_SECONDS:10}
     persistence:
       batch-size: ${LOG_AGGREGATOR_PERSISTENCE_BATCH_SIZE:100}
       flush-interval-ms: ${LOG_AGGREGATOR_PERSISTENCE_FLUSH_INTERVAL_MS:500}

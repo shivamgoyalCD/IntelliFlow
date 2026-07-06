@@ -1,0 +1,42 @@
+server:
+  port: ${METRICS_COLLECTOR_PORT:8086}
+
+spring:
+  application:
+    name: metrics-collector
+  datasource:
+    url: ${METRICS_COLLECTOR_DB_URL:jdbc:postgresql://localhost:5433/intelliflow_metrics}
+    username: ${METRICS_COLLECTOR_DB_USERNAME:intelliflow}
+    password: ${METRICS_COLLECTOR_DB_PASSWORD:intelliflow}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: ${METRICS_COLLECTOR_FLYWAY_ENABLED:true}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${METRICS_COLLECTOR_KAFKA_GROUP_ID:metrics-collector}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+intelliflow:
+  metrics-collector:
+    consumer:
+      enabled: ${METRICS_COLLECTOR_CONSUMER_ENABLED:true}
+    aggregation:
+      flush-interval-ms: ${METRICS_COLLECTOR_FLUSH_INTERVAL_MS:60000}
+      tdigest-compression: ${METRICS_COLLECTOR_TDIGEST_COMPRESSION:100}
+    cache:
+      key-prefix: ${METRICS_COLLECTOR_CACHE_KEY_PREFIX:intelliflow:hot-metrics}
+      ttl-seconds: ${METRICS_COLLECTOR_CACHE_TTL_SECONDS:120}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
