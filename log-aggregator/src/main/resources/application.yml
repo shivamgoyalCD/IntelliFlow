@@ -1,0 +1,51 @@
+server:
+  port: ${LOG_AGGREGATOR_PORT:8084}
+
+spring:
+  application:
+    name: log-aggregator
+  datasource:
+    url: ${LOG_AGGREGATOR_DB_URL:jdbc:postgresql://localhost:5433/intelliflow_metrics}
+    username: ${LOG_AGGREGATOR_DB_USERNAME:intelliflow}
+    password: ${LOG_AGGREGATOR_DB_PASSWORD:intelliflow}
+    driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${LOG_AGGREGATOR_KAFKA_GROUP_ID:log-aggregator}
+      auto-offset-reset: ${LOG_AGGREGATOR_AUTO_OFFSET_RESET:latest}
+
+intelliflow:
+  log-aggregator:
+    consumer:
+      enabled: ${LOG_AGGREGATOR_CONSUMER_ENABLED:true}
+      concurrency: ${LOG_AGGREGATOR_CONSUMER_CONCURRENCY:1}
+      max-poll-records: ${LOG_AGGREGATOR_MAX_POLL_RECORDS:100}
+      error-backoff-ms: ${LOG_AGGREGATOR_ERROR_BACKOFF_MS:1000}
+      error-max-attempts: ${LOG_AGGREGATOR_ERROR_MAX_ATTEMPTS:3}
+    persistence:
+      batch-size: ${LOG_AGGREGATOR_PERSISTENCE_BATCH_SIZE:100}
+      flush-interval-ms: ${LOG_AGGREGATOR_PERSISTENCE_FLUSH_INTERVAL_MS:500}
+      retry:
+        max-attempts: ${LOG_AGGREGATOR_PERSISTENCE_RETRY_MAX_ATTEMPTS:3}
+        backoff-ms: ${LOG_AGGREGATOR_PERSISTENCE_RETRY_BACKOFF_MS:100}
+    aggregation:
+      flush-interval-ms: ${LOG_AGGREGATOR_AGGREGATION_FLUSH_INTERVAL_MS:60000}
+    elasticsearch:
+      uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
+      index-prefix: ${LOG_AGGREGATOR_ELASTICSEARCH_INDEX_PREFIX:intelliflow-logs}
+      template:
+        enabled: ${LOG_AGGREGATOR_ELASTICSEARCH_TEMPLATE_ENABLED:true}
+        name: ${LOG_AGGREGATOR_ELASTICSEARCH_TEMPLATE_NAME:intelliflow-logs-template}
+        number-of-shards: ${LOG_AGGREGATOR_ELASTICSEARCH_TEMPLATE_SHARDS:1}
+        number-of-replicas: ${LOG_AGGREGATOR_ELASTICSEARCH_TEMPLATE_REPLICAS:0}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
