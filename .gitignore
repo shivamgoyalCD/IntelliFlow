@@ -1,0 +1,74 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.factorypath
+
+# AI agent workspace files
+.agents/
+
+# Java and Maven build output
+target/
+*/target/
+**/target/
+.mvn/timing.properties
+
+# Logs and runtime dumps
+*.log
+logs/
+*.pid
+*.hprof
+hs_err_pid*
+replay_pid*
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+application-local.yml
+application-local.yaml
+application-*.local.yml
+application-*.local.yaml
+
+# Docker local overrides
+docker-compose.override.yml
+compose.override.yml
+
+# Frontend dependencies and build output
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+build/
+*/build/
+.next/
+*/.next/
+coverage/
+*/coverage/
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
